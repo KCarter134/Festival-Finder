@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+}
+
+header {
+    height: 60vh;
+}
+
+.web-title {
+    color: white;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    margin: 0 auto;
+    z-index: 999;
+}
+
+.city-pic {
+    width: 100%;
+    z-index: 1;
+    height: 100%;
+}
+
+#search-section {
+    text-align: center;
+    height: 2000px;
+    background-color: black;
+}
+
+.search-bar {
+    height: 40px;
+    border-radius: 5px;
+}
+
+.text {
+    width: 500px;
+    font-size: larger;
+}
+
+.submit{
+    width: 100px;
+    font-size: larger
+}
