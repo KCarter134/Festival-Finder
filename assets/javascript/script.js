@@ -8,17 +8,40 @@ let endPoint = "https://api.seatgeek.com/2"
 let queryString = "https://api.seatgeek.com/2/events?client_id=" + clientID + "&taxonomies.name=concert"
 const searchValue = document.getElementById("user-input");
 const submitBtn = document.getElementById("submit-button");
+const card = document.getElementById("card");
 
- 
+// fetch SeatGeek api data
+apiData = () => {
     fetch(queryString)
         .then(response => {
             return response.json()
         })
         .then(data => {
-            console.log(data)
+            console.log(data.events)
         });
+}
+// apiData();
 
-
+// search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
-    console.log(searchValue.value);
+
+     if (searchValue.value === "") { // prompts user to type relevant data
+        console.log("Enter city, artist, or venue");
+    } else {
+        console.log(searchValue.value)}
+    
+    searchValue.value = "" //clears input field after click
+   
+    fetch(queryString)
+        .then(response => {
+            if (!response.ok) {
+                return Error("ERROR")
+            }
+            return response.json()
+        })
+        .then(data => {
+            console.log(data.events)
+        }).catch(error => {
+            console.log(error)
+        });
 })
