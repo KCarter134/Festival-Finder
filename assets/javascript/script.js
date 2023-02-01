@@ -6,15 +6,19 @@
 let clientID = "MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU"
 let endPoint = "https://api.seatgeek.com/2"
 let queryString = "https://api.seatgeek.com/2/events?client_id=" + clientID + "&taxonomies.name=concert"
-let searchValue = document.getElementsByClassName("text");
-let submitBtn = document.getElementsByClassName("submit")
+const searchValue = document.getElementById("user-input");
+const submitBtn = document.getElementById("submit-button");
 
-fetch(queryString)
-    .then(response => {
-        return response.json()
-    })
-    .then(data => {
-        console.log(data)
-    });
+ 
+    fetch(queryString)
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            console.log(data)
+        });
 
-    sub
+
+submitBtn.addEventListener("click", () => {
+    console.log(searchValue.value);
+})
