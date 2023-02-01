@@ -24,7 +24,6 @@ apiData = () => {
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
-
      if (searchValue.value === "") { // prompts user to type relevant data
         console.log("Enter city, artist, or venue");
     } else {
