@@ -8,7 +8,7 @@ let endPoint = "https://api.seatgeek.com/2"
 let queryString = "https://api.seatgeek.com/2/events?client_id=" + clientID + "&taxonomies.name=concert"
 const searchValue = document.getElementById("user-input");
 const submitBtn = document.getElementById("submit-button");
-const card = document.getElementById("card");
+const cardContainer = document.getElementById("card-container");
 
 // fetch SeatGeek api data
 apiData = () => {
@@ -40,8 +40,30 @@ submitBtn.addEventListener("click", () => {
             return response.json()
         })
         .then(data => {
-            console.log(data.events)
+            let concertArray = [];
+            concertArray = data.events
+            console.log(concertArray)
+            createCards(concertArray);
+            
         }).catch(error => {
             console.log(error)
         });
-})
+});
+
+createCards = (data) => {
+    for(i=0; i < data.length; i++) {
+        let card = document.createElement("div"),
+        concertName = document.createElement("div"),
+        concertCity = document.createElement("div"),
+        concertVenue = document.createElement("div");
+        concertName.textContent = data[i].title;
+        concertCity.textContent = data[i].venue.display_location;
+        concertVenue.textContent = data[i].venue.name;
+        card.appendChild(concertName);
+        card.appendChild(concertCity);
+        card.appendChild(concertVenue);
+
+        cardContainer.appendChild(card);
+    }
+
+}
