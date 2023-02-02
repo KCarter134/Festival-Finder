@@ -44,13 +44,16 @@ submitBtn.addEventListener("click", () => {
             console.log(concertArray)
             createCards(concertArray);
 
+            // attempt at preventing duplicates in concertArray
             var result = concertArray.reduce((uniqueID, o) => {
+                let arrID = data.id // 
+                console.log(arrID)// undefined (in console)
                 if(!uniqueID.some(obj => obj.label === o.label && obj.value === o.value)) {
-                  uniqueID.push(o);
+                  uniqueID.push(o); 
                 }
-                return uniqueID;
+                return uniqueID; 
             },[]);
-            console.log(result);
+            console.log(result); // somehow console logs the first item in array
             
         }).catch(error => {
             console.log(error)
@@ -59,10 +62,15 @@ submitBtn.addEventListener("click", () => {
 
 createCards = (data) => {
     for(i=0; i < data.length; i++) {
-        let card = document.createElement("div"),
-        concertName = document.createElement("div"),
-        concertCity = document.createElement("div"),
-        concertVenue = document.createElement("div");
+        let card = document.createElement("div")
+        card.className = "card-body"
+        let concertName = document.createElement("div")
+        concertName.className = "card-name"
+        let concertCity = document.createElement("div")
+        concertCity.className = "card-city"
+        let concertVenue = document.createElement("div")
+        concertVenue.className = "card-venue"
+
         concertName.textContent = data[i].title;
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
