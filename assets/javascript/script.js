@@ -43,6 +43,14 @@ submitBtn.addEventListener("click", () => {
             concertArray = data.events
             console.log(concertArray)
             createCards(concertArray);
+
+            var result = concertArray.reduce((uniqueID, o) => {
+                if(!uniqueID.some(obj => obj.label === o.label && obj.value === o.value)) {
+                  uniqueID.push(o);
+                }
+                return uniqueID;
+            },[]);
+            console.log(result);
             
         }).catch(error => {
             console.log(error)
@@ -63,6 +71,7 @@ createCards = (data) => {
         card.appendChild(concertVenue);
 
         cardContainer.appendChild(card);
-    }
+    };
+};
 
-}
+
