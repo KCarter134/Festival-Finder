@@ -31,7 +31,7 @@ function searchByCityCoords(city){
      //Query city for coordinates from OpenWeatherMap
     fetch(queryCity)
     .then(result => { 
-        (result.status)
+        console.log(result.status)
         return result.json();
     })
     .then(data => {
@@ -55,6 +55,7 @@ function searchByCityCoords(city){
         }  
     });
 }
+
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
