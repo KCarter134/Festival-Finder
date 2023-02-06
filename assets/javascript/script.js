@@ -73,13 +73,17 @@ createCards = (data) => {
         concertCity.className = "card-city"
         let concertVenue = document.createElement("div")
         concertVenue.className = "card-venue"
+        let concertTime = document.createElement("div")
+        concertTime.className = "card-time"
 
         concertName.textContent = data[i].title;
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
+        concertTime.textContent = data[i].datetime_local;
         card.appendChild(concertName);
         card.appendChild(concertCity);
         card.appendChild(concertVenue);
+        card.appendChild(concertTime);
 
         card.style.cursor = 'pointer'
         card.classList.add('modal-trigger');
@@ -87,9 +91,9 @@ createCards = (data) => {
 
         card.addEventListener('click', () => {
             removeChildrenByClassName('card-content')
-            let eventName = document.createElement('span'),
-            eventCity = document.createElement('span'),
-            eventVenue = document.createElement('span');
+            let eventName = document.createElement('div'),
+            eventCity = document.createElement('div'),
+            eventVenue = document.createElement('div');
 
             eventName.textContent = concertName.textContent;
             eventCity.textContent = concertCity.textContent;
