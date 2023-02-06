@@ -31,7 +31,7 @@ function searchByCityCoords(city){
      //Query city for coordinates from OpenWeatherMap
     fetch(queryCity)
     .then(result => { 
-        (result.status)
+        console.log(result.status)
         return result.json();
     })
     .then(data => {
@@ -53,11 +53,9 @@ function searchByCityCoords(city){
             //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
             ("failed");
         }  
-    })
-    .catch((error) => {
-        console.log("error")
-    })
+    });
 }
+
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -67,12 +65,17 @@ submitBtn.addEventListener("click", () => {
     } else {
         console.log(searchValue.value)
     }
-
-    searchByCityCoords(searchValue.value)
+    try{
+        searchByCityCoords(searchValue.value)
+    }catch{
+        console.log("failed")
+    }
+    
     searchValue.value = "" //clears input field after click
 });
 
 createCards = (data) => {
+    let filterMap = new Map();
     for(i=0; i < data.length; i++) {
         let card = document.createElement("div")
         card.className = "card-body"
@@ -90,6 +93,12 @@ createCards = (data) => {
         
 
         concertName.textContent = data[i].title;
+        if(filterMap.has(concertName.textContent)){
+            break;
+        }else{
+            filterMap.set(concertName.textContent, i);
+        }
+
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
