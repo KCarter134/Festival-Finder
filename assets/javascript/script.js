@@ -10,6 +10,14 @@ const searchValue = document.getElementById("user-input");
 const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
+//function to remove elements by className
+function removeChildrenByClassName(className){
+    const toDelete = document.getElementsByClassName(className);
+    while(toDelete.length > 0){
+        toDelete[0].parentNode.removeChild(toDelete[0])
+    }
+}
+
 // fetch SeatGeek api data
 apiData = () => {
     fetch(queryString)
@@ -24,6 +32,7 @@ apiData = () => {
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
+    removeChildrenByClassName('card-body');
      if (searchValue.value === "") { // prompts user to type relevant data
         console.log("Enter city, artist, or venue");
     } else {
@@ -81,5 +90,3 @@ createCards = (data) => {
         cardContainer.appendChild(card);
     };
 };
-
-
