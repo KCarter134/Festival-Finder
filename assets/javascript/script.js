@@ -18,6 +18,10 @@ function removeChildrenByClassName(className){
         toDelete[0].parentNode.removeChild(toDelete[0])
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
 
 // fetch SeatGeek api data
 apiData = () => {
@@ -53,16 +57,6 @@ submitBtn.addEventListener("click", () => {
             concertArray = data.events
             console.log(concertArray)
             createCards(concertArray);
-
-            // attempt at preventing duplicates in concertArray
-            var result = concertArray.reduce((uniqueID, o) => {
-                let arrID = data.id // 
-                console.log(arrID)// undefined (in console)
-                if(!uniqueID.some(obj => obj.label === o.label && obj.value === o.value)) {
-                  uniqueID.push(o); 
-                }
-                return uniqueID; 
-            },[]);
             console.log(result); // somehow console logs the first item in array
             
         }).catch(error => {
@@ -87,6 +81,10 @@ createCards = (data) => {
         card.appendChild(concertName);
         card.appendChild(concertCity);
         card.appendChild(concertVenue);
+
+        card.style.cursor = 'pointer'
+        card.classList.add('modal-trigger');
+        card.setAttribute('data-target', 'modal1');
 
         cardContainer.appendChild(card);
     };
