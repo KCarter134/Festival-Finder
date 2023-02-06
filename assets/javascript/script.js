@@ -85,6 +85,25 @@ createCards = (data) => {
         card.classList.add('modal-trigger');
         card.setAttribute('data-target', 'modal1');
 
+        card.addEventListener('click', () => {
+            removeChildrenByClassName('card-content')
+            let eventName = document.createElement('span'),
+            eventCity = document.createElement('span'),
+            eventVenue = document.createElement('span');
+
+            eventName.textContent = concertName.textContent;
+            eventCity.textContent = concertCity.textContent;
+            eventVenue.textContent = concertVenue.textContent;
+
+            eventName.classList.add('card-content');
+            eventCity.classList.add('card-content');
+            eventVenue.classList.add('card-content');
+
+            let parent = document.getElementById('event-modal');
+            parent.appendChild(eventName);
+            parent.appendChild(eventCity);
+            parent.appendChild(eventVenue);
+        });
         cardContainer.appendChild(card);
     };
 };
