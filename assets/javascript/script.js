@@ -11,24 +11,53 @@ const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
 //function to remove elements by className
+
 function removeChildrenByClassName(className){
     const toDelete = document.getElementsByClassName(className);
     while(toDelete.length > 0){
         toDelete[0].parentNode.removeChild(toDelete[0])
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
 
-// fetch SeatGeek api data
-apiData = () => {
-    fetch(queryString)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            console.log(data.events)
-        });
-}
+
 // apiData();
+function searchByCityCoords(city){
+    let APIKey = '22c381336de0f996a4083c7ecafd3174';
+    let queryCity = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + APIKey;
+     //Query city for coordinates from OpenWeatherMap
+    fetch(queryCity)
+    .then(result => { 
+        (result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            let something = 'https://api.seatgeek.com/2/events?' + 'lon=' + data[0].lon+ '&' + 'lat=' + data[0].lat +  '&taxonomies.name=concert&client_id=MzEzNjU0MzZ8MTY3Mjk2NjkyNi4xMTAzMDM'
+            fetch(something)
+            .then(result => {
+                console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.events
+                console.log(concertArray)
+                createCards(concertArray);
+            });
+        }catch{
+            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
+            ("failed");
+        }  
+    })
+    .catch((error) => {
+        console.log("error")
+    })
+}
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -36,37 +65,11 @@ submitBtn.addEventListener("click", () => {
      if (searchValue.value === "") { // prompts user to type relevant data
         console.log("Enter city, artist, or venue");
     } else {
-        console.log(searchValue.value)}
-    
-    searchValue.value = "" //clears input field after click
-   
-    fetch(queryString)
-        .then(response => {
-            if (!response.ok) {
-                return Error("ERROR")
-            }
-            return response.json()
-        })
-        .then(data => {
-            let concertArray = [];
-            concertArray = data.events
-            console.log(concertArray)
-            createCards(concertArray);
+        console.log(searchValue.value)
+    }
 
-            // attempt at preventing duplicates in concertArray
-            var result = concertArray.reduce((uniqueID, o) => {
-                let arrID = data.id // 
-                console.log(arrID)// undefined (in console)
-                if(!uniqueID.some(obj => obj.label === o.label && obj.value === o.value)) {
-                  uniqueID.push(o); 
-                }
-                return uniqueID; 
-            },[]);
-            console.log(result); // somehow console logs the first item in array
-            
-        }).catch(error => {
-            console.log(error)
-        });
+    searchByCityCoords(searchValue.value)
+    searchValue.value = "" //clears input field after click
 });
 
 createCards = (data) => {
@@ -79,16 +82,41 @@ createCards = (data) => {
         concertCity.className = "card-city"
         let concertVenue = document.createElement("div")
         concertVenue.className = "card-venue"
+        let concertTime = document.createElement("div")
+        concertTime.className = "card-time"
 
         concertName.textContent = data[i].title;
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
+        concertTime.textContent = data[i].datetime_local;
         card.appendChild(concertName);
         card.appendChild(concertCity);
         card.appendChild(concertVenue);
+        card.appendChild(concertTime);
 
+        card.style.cursor = 'pointer'
+        card.classList.add('modal-trigger');
+        card.setAttribute('data-target', 'modal1');
+
+        card.addEventListener('click', () => {
+            removeChildrenByClassName('card-content')
+            let eventName = document.createElement('div'),
+            eventCity = document.createElement('div'),
+            eventVenue = document.createElement('div');
+
+            eventName.textContent = concertName.textContent;
+            eventCity.textContent = concertCity.textContent;
+            eventVenue.textContent = concertVenue.textContent;
+
+            eventName.classList.add('card-content');
+            eventCity.classList.add('card-content');
+            eventVenue.classList.add('card-content');
+
+            let parent = document.getElementById('event-modal');
+            parent.appendChild(eventName);
+            parent.appendChild(eventCity);
+            parent.appendChild(eventVenue);
+        });
         cardContainer.appendChild(card);
     };
 };
-
-

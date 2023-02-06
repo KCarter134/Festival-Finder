@@ -29,12 +29,16 @@ header {
 
 .search-bar {
     height: 40px;
-    border-radius: 5px;
+
 }
 
 .text {
-    width: 500px;
-    font-size: larger;
+    color: white;
+}
+
+#user-input {
+    font-size: 30px;
+    width: 40vw;
 }
 
 .submit{
@@ -45,13 +49,15 @@ header {
                                                 /* dynamic cards */
 
 #card-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 30px;
+
 }
 
 .card-body {
     text-align: center;
-    font-size: larger;
+    font-size: 30px;
+    border: 1px solid white;
 }
