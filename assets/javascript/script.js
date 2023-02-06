@@ -54,17 +54,6 @@ submitBtn.addEventListener("click", () => {
             console.log(concertArray)
             createCards(concertArray);
 
-            // attempt at preventing duplicates in concertArray
-            var result = concertArray.reduce((uniqueID, o) => {
-                let arrID = data.id // 
-                console.log(arrID)// undefined (in console)
-                if(!uniqueID.some(obj => obj.label === o.label && obj.value === o.value)) {
-                  uniqueID.push(o); 
-                }
-                return uniqueID; 
-            },[]);
-            console.log(result); // somehow console logs the first item in array
-            
         }).catch(error => {
             console.log(error)
         });
