@@ -10,6 +10,15 @@ const searchValue = document.getElementById("user-input");
 const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
+//function to remove elements by className
+
+function removeChildrenByClassName(className){
+    const toDelete = document.getElementsByClassName(className);
+    while(toDelete.length > 0){
+        toDelete[0].parentNode.removeChild(toDelete[0])
+    }
+}
+
 // fetch SeatGeek api data
 apiData = () => {
     fetch(queryString)
@@ -24,6 +33,7 @@ apiData = () => {
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
+    removeChildrenByClassName('card-body');
      if (searchValue.value === "") { // prompts user to type relevant data
         console.log("Enter city, artist, or venue");
     } else {
@@ -43,6 +53,17 @@ submitBtn.addEventListener("click", () => {
             concertArray = data.events
             console.log(concertArray)
             createCards(concertArray);
+
+            // attempt at preventing duplicates in concertArray
+            var result = concertArray.reduce((uniqueID, o) => {
+                let arrID = data.id // 
+                console.log(arrID)// undefined (in console)
+                if(!uniqueID.some(obj => obj.label === o.label && obj.value === o.value)) {
+                  uniqueID.push(o); 
+                }
+                return uniqueID; 
+            },[]);
+            console.log(result); // somehow console logs the first item in array
             
         }).catch(error => {
             console.log(error)
@@ -51,10 +72,15 @@ submitBtn.addEventListener("click", () => {
 
 createCards = (data) => {
     for(i=0; i < data.length; i++) {
-        let card = document.createElement("div"),
-        concertName = document.createElement("div"),
-        concertCity = document.createElement("div"),
-        concertVenue = document.createElement("div");
+        let card = document.createElement("div")
+        card.className = "card-body"
+        let concertName = document.createElement("div")
+        concertName.className = "card-name"
+        let concertCity = document.createElement("div")
+        concertCity.className = "card-city"
+        let concertVenue = document.createElement("div")
+        concertVenue.className = "card-venue"
+
         concertName.textContent = data[i].title;
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
@@ -63,6 +89,7 @@ createCards = (data) => {
         card.appendChild(concertVenue);
 
         cardContainer.appendChild(card);
-    }
+    };
+};
 
-}
+
