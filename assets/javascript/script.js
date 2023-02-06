@@ -11,6 +11,7 @@ const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
 //function to remove elements by className
+
 function removeChildrenByClassName(className){
     const toDelete = document.getElementsByClassName(className);
     while(toDelete.length > 0){
