@@ -29,12 +29,16 @@ header {
 
 .search-bar {
     height: 40px;
-    border-radius: 5px;
+
 }
 
 .text {
-    width: 500px;
-    font-size: larger;
+    color: white;
+}
+
+#user-input {
+    font-size: 30px;
+    width: 40vw;
 }
 
 .submit{
