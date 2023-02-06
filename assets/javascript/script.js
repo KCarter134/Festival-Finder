@@ -57,8 +57,7 @@ submitBtn.addEventListener("click", () => {
             concertArray = data.events
             console.log(concertArray)
             createCards(concertArray);
-            console.log(result); // somehow console logs the first item in array
-            
+
         }).catch(error => {
             console.log(error)
         });
@@ -89,5 +88,3 @@ createCards = (data) => {
         cardContainer.appendChild(card);
     };
 };
-
-
