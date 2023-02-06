@@ -60,4 +60,5 @@ header {
     text-align: center;
     font-size: 30px;
     border: 1px solid white;
+    border-radius: 5px;
 }

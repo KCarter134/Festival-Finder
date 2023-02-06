@@ -82,16 +82,22 @@ createCards = (data) => {
         concertCity.className = "card-city"
         let concertVenue = document.createElement("div")
         concertVenue.className = "card-venue"
+        let concertDate = document.createElement("div")
+        concertDate.className = "card-date"
         let concertTime = document.createElement("div")
         concertTime.className = "card-time"
+        let dateTime = data[i].datetime_local.split("T");
+        
 
         concertName.textContent = data[i].title;
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
-        concertTime.textContent = data[i].datetime_local;
+        concertDate.textContent = dateTime[0];
+        concertTime.textContent = dateTime[1];
         card.appendChild(concertName);
         card.appendChild(concertCity);
         card.appendChild(concertVenue);
+        card.appendChild(concertDate);
         card.appendChild(concertTime);
 
         card.style.cursor = 'pointer'
