@@ -23,17 +23,41 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Modal.init(elems);
   });
 
-// fetch SeatGeek api data
-apiData = () => {
-    fetch(queryString)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            console.log(data.events)
-        });
-}
+
 // apiData();
+function searchByCityCoords(city){
+    let APIKey = '22c381336de0f996a4083c7ecafd3174';
+    let queryCity = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + APIKey;
+     //Query city for coordinates from OpenWeatherMap
+    fetch(queryCity)
+    .then(result => { 
+        (result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            let something = 'https://api.seatgeek.com/2/events?' + 'lon=' + data[0].lon+ '&' + 'lat=' + data[0].lat +  '&taxonomies.name=concert&client_id=MzEzNjU0MzZ8MTY3Mjk2NjkyNi4xMTAzMDM'
+            fetch(something)
+            .then(result => {
+                console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.events
+                console.log(concertArray)
+                createCards(concertArray);
+            });
+        }catch{
+            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
+            ("failed");
+        }  
+    })
+    .catch((error) => {
+        console.log("error")
+    })
+}
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -41,26 +65,11 @@ submitBtn.addEventListener("click", () => {
      if (searchValue.value === "") { // prompts user to type relevant data
         console.log("Enter city, artist, or venue");
     } else {
-        console.log(searchValue.value)}
-    
-    searchValue.value = "" //clears input field after click
-   
-    fetch(queryString)
-        .then(response => {
-            if (!response.ok) {
-                return Error("ERROR")
-            }
-            return response.json()
-        })
-        .then(data => {
-            let concertArray = [];
-            concertArray = data.events
-            console.log(concertArray)
-            createCards(concertArray);
+        console.log(searchValue.value)
+    }
 
-        }).catch(error => {
-            console.log(error)
-        });
+    searchByCityCoords(searchValue.value)
+    searchValue.value = "" //clears input field after click
 });
 
 createCards = (data) => {
