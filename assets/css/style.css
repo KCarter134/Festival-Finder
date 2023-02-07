@@ -3,7 +3,9 @@ body {
 }
 
 header {
-    height: 60vh;
+    height: 40vh;
+    text-shadow: 1px 5px 4px rgba(0, 0, 0, 0.6);
+    font-weight: 300;
 }
 
 .web-title {
@@ -21,10 +23,10 @@ header {
 }
 
 #search-section {
-    color: white;
+    /* color: white; */
     text-align: center;
     height: 2000px;
-    background-color: black;
+    /* background-color: black; */
 }
 
 .search-bar {
@@ -33,7 +35,7 @@ header {
 }
 
 .text {
-    color: white;
+    /* color: white; */
 }
 
 #user-input {
@@ -51,7 +53,7 @@ header {
 #card-container {
     margin-top: 100px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 400px 400px 400px 400px;
     gap: 30px;
 
 }
@@ -59,6 +61,12 @@ header {
 .card-body {
     text-align: center;
     font-size: 30px;
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 5px;
+}
+
+.concert-img {
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
