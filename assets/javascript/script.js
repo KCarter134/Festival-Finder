@@ -35,11 +35,10 @@ function searchByCityCoords(city){
         return result.json();
     })
     .then(data => {
-        try{
             let something = 'https://api.seatgeek.com/2/events?' + 'lon=' + data[0].lon+ '&' + 'lat=' + data[0].lat +  '&taxonomies.name=concert&client_id=MzEzNjU0MzZ8MTY3Mjk2NjkyNi4xMTAzMDM'
             fetch(something)
             .then(result => {
-                console.log(result);
+                console.log(result.status);
                 return result.json();
             })
             .then(data => {
@@ -48,12 +47,12 @@ function searchByCityCoords(city){
                 concertArray = data.events
                 console.log(concertArray)
                 createCards(concertArray);
-            });
-        }catch{
-            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
-            ("failed");
-        }  
-    });
+            })
+            .catch(error => console.log('search failed')) 
+    })
+    .catch(error => {
+        console.log('search failed')
+    })
 }
 
 
@@ -90,15 +89,14 @@ createCards = (data) => {
         let concertTime = document.createElement("div")
         concertTime.className = "card-time"
         let dateTime = data[i].datetime_local.split("T");
-        
-
         concertName.textContent = data[i].title;
+
         if(filterMap.has(concertName.textContent)){
-            break;
+            continue;
         }else{
             filterMap.set(concertName.textContent, i);
         }
-
+        
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
