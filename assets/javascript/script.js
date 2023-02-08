@@ -57,6 +57,59 @@ function searchByCityCoords(city){
 }
 
 
+// search by venue
+function searchByVenue(venue){
+    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
+    fetch(queryVenue)
+    .then(result => { 
+        console.log(result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            fetch()
+            .then(result => {
+                console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.venue
+                console.log(concertArray)
+                createCards(concertArray);
+            });
+        }catch{
+            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
+            ("failed");
+        }  
+    });
+}
+
+// converting time to a normal format (am/pm)
+function tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)?/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? 'AM' : 'PM';
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join (''); // return adjusted time or original string
+  }
+
+function formatDate(currDate){
+    //current format is yyyy/mm/dd
+    let destructedDate = currDate.split('-');
+    let yyyy = destructedDate[0];
+    let mm = destructedDate[1];
+    let dd = destructedDate[2];
+    let reconStructedDate = mm + '/' + dd + '/' + yyyy;
+
+    return reconStructedDate;
+}
+
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
     removeChildrenByClassName('card-body');
@@ -89,9 +142,11 @@ createCards = (data) => {
         concertDate.className = "card-date"
         let concertTime = document.createElement("div")
         concertTime.className = "card-time"
+        let concertImg = document.createElement("img")
+        concertImg.setAttribute('src', data[i].performers[0].image)
+        concertImg.classList.add("concert-img")
         let dateTime = data[i].datetime_local.split("T");
         
-
         concertName.textContent = data[i].title;
         if(filterMap.has(concertName.textContent)){
             break;
@@ -99,15 +154,19 @@ createCards = (data) => {
             filterMap.set(concertName.textContent, i);
         }
 
+
+
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
-        concertTime.textContent = dateTime[1];
+        concertTime.textContent = tConvert(dateTime[1]);
+        card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
         card.appendChild(concertVenue);
         card.appendChild(concertDate);
         card.appendChild(concertTime);
+       
 
         card.style.cursor = 'pointer'
         card.classList.add('modal-trigger');
@@ -119,9 +178,9 @@ createCards = (data) => {
             eventCity = document.createElement('div'),
             eventVenue = document.createElement('div');
 
-            eventName.textContent = concertName.textContent;
-            eventCity.textContent = concertCity.textContent;
-            eventVenue.textContent = concertVenue.textContent;
+            eventName.textContent = "Artist: " + concertName.textContent;
+            eventCity.textContent = "City: " + concertCity.textContent;
+            eventVenue.textContent = "Venue: " + concertVenue.textContent;
 
             eventName.classList.add('card-content');
             eventCity.classList.add('card-content');
