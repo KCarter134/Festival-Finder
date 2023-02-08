@@ -100,11 +100,16 @@ function timeConvert (time) {
     return time.join (''); // return adjusted time or original string
   }
 
-//format date 
-// function dateConvert() {
-//     let dateConv = new Date('02, 12, 2023')
-//     return moment(dateConv).format('MM dd YYYY')
-// }
+function formatDate(currDate){
+    //current format is yyyy/mm/dd
+    let destructedDate = currDate.split('-');
+    let yyyy = destructedDate[0];
+    let mm = destructedDate[1];
+    let dd = destructedDate[2];
+    let reconStructedDate = mm + '/' + dd + '/' + yyyy;
+
+    return reconStructedDate;
+}
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -154,7 +159,7 @@ createCards = (data) => {
 
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
-        concertDate.textContent = dateTime[0];
+        concertDate.textContent = formatDate(dateTime[0]);
         concertTime.textContent = timeConvert(dateTime[1]);
         card.appendChild(concertImg);
         card.appendChild(concertName);
@@ -170,9 +175,12 @@ createCards = (data) => {
 
         card.addEventListener('click', () => {
             removeChildrenByClassName('card-content')
-            let eventName = document.createElement('div'),
+            eventName = document.createElement('div'),
+            eventName.className = "modal-title";
             eventCity = document.createElement('div'),
+            eventCity.className = "modal-city";
             eventVenue = document.createElement('div');
+            eventVenue.className = "modal-venue";
 
             eventName.textContent = "Artist: " + concertName.textContent;
             eventCity.textContent = "City: " + concertCity.textContent;
