@@ -3,38 +3,45 @@ body {
 }
 
 header {
-    height: 60vh;
+    height: 40vh;
+    text-shadow: 1px 5px 4px rgba(0, 0, 0, 0.6);
+    font-weight: 300;
+    width: 100vw;
 }
 
 .web-title {
     position: absolute;
     top: 25px;
     left: 25px;
-    margin: 0 auto;
+    margin: 0;
     z-index: 999;
 }
 
 .city-pic {
-    width: 100%;
+    width: 100vw;
     z-index: 1;
     height: 100%;
 }
 
 #search-section {
-    color: white;
+    /* color: white; */
     text-align: center;
-    height: 2000px;
-    background-color: black;
+    margin-bottom: 100px;
+    /* background-color: black; */
 }
 
 .search-bar {
     height: 40px;
-    border-radius: 5px;
+
 }
 
 .text {
-    width: 500px;
-    font-size: larger;
+    /* color: white; */
+}
+
+#user-input {
+    font-size: 30px;
+    width: 40vw;
 }
 
 .submit{
@@ -47,13 +54,52 @@ header {
 #card-container {
     margin-top: 100px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 15% 15% 15% 15%;
     gap: 30px;
+    justify-content: center;
 
 }
 
 .card-body {
     text-align: center;
     font-size: 30px;
-    border: 1px solid white;
+    border: 1px solid black;
+    border-radius: 5px;
 }
+
+.concert-img {
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+
+                                                    /* Modal Info */
+
+.modal-title {
+    font-size: 30px;
+}
+
+@media (max-width: 1300px) {
+    #card-container { 
+        grid-template-columns: repeat(3, 1fr); 
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+    .card-body {font-size: 19px;}
+    .web-title {font-size: 6vw;}
+    #user-input {
+        font-size: 25px;
+        width: 60vw;
+    }
+  }
+
+@media (max-width: 600px) {
+    #card-container { grid-template-columns: repeat(1, 1fr); }
+    .card-body {font-size: 15px;}
+    .web-title {font-size: 6vw;}
+    #user-input {
+        font-size: 20px;
+        width: 80vw;
+    }
+  }
