@@ -1,3 +1,4 @@
+
 // secret 9e575b187543b7dc56afdf8ec70a64a015793b5fe6d5bc85715056d9f32ec152
 // Client ID: MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU
 // You can add client_id and optionally client_secret to the end of any valid url to authenticate your request.
@@ -87,7 +88,7 @@ function searchByVenue(venue){
 }
 
 // converting time to a normal format (am/pm)
-function tConvert (time) {
+function timeConvert (time) {
     // Check correct time format and split into components
     time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)?/) || [time];
   
@@ -98,6 +99,12 @@ function tConvert (time) {
     }
     return time.join (''); // return adjusted time or original string
   }
+
+//format date 
+// function dateConvert() {
+//     let dateConv = new Date('02, 12, 2023')
+//     return moment(dateConv).format('MM dd YYYY')
+// }
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -148,7 +155,7 @@ createCards = (data) => {
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
-        concertTime.textContent = tConvert(dateTime[1]);
+        concertTime.textContent = timeConvert(dateTime[1]);
         card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
