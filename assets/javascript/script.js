@@ -1,8 +1,6 @@
-
 // secret 9e575b187543b7dc56afdf8ec70a64a015793b5fe6d5bc85715056d9f32ec152
 // Client ID: MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU
 // You can add client_id and optionally client_secret to the end of any valid url to authenticate your request.
-
 
 let clientID = "MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU"
 let endPoint = "https://api.seatgeek.com/2"
@@ -12,7 +10,6 @@ const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
 //function to remove elements by className
-
 function removeChildrenByClassName(className){
     const toDelete = document.getElementsByClassName(className);
     while(toDelete.length > 0){
@@ -36,9 +33,38 @@ function searchByCityCoords(city){
         return result.json();
     })
     .then(data => {
-        try{
             let something = 'https://api.seatgeek.com/2/events?' + 'lon=' + data[0].lon+ '&' + 'lat=' + data[0].lat +  '&taxonomies.name=concert&client_id=MzEzNjU0MzZ8MTY3Mjk2NjkyNi4xMTAzMDM'
             fetch(something)
+            .then(result => {
+                console.log(result.status);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.events
+                console.log(concertArray)
+                createCards(concertArray);
+            })
+            .catch(error => console.log('search failed')) 
+    })
+    .catch(error => {
+        console.log('search failed')
+    })
+}
+
+
+// search by venue
+function searchByVenue(venue){
+    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
+    fetch(queryVenue)
+    .then(result => { 
+        console.log(result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            fetch()
             .then(result => {
                 console.log(result);
                 return result.json();
@@ -46,7 +72,7 @@ function searchByCityCoords(city){
             .then(data => {
                 console.log(data)
                 let concertArray = [];
-                concertArray = data.events
+                concertArray = data.venue
                 console.log(concertArray)
                 createCards(concertArray);
             });
@@ -87,18 +113,22 @@ function searchByVenue(venue){
     });
 }
 
-// converting time to a normal format (am/pm)
-function timeConvert (time) {
-    // Check correct time format and split into components
-    time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)?/) || [time];
-  
-    if (time.length > 1) { // If time format correct
-      time = time.slice (1);  // Remove full string match value
-      time[5] = +time[0] < 12 ? 'AM' : 'PM';
-      time[0] = +time[0] % 12 || 12; // Adjust hours
+//format time 
+function formatTime(currTime){
+    let am_pm = '';
+    let deconstructedTime = currTime.split(':');
+    let hours = deconstructedTime[0];
+    let minutes = deconstructedTime[1];
+
+    if(hours > 12){
+        am_pm = 'PM';
+        hours -= 12;
+    }else{
+        am_pm = 'AM';
     }
-    return time.join (''); // return adjusted time or original string
-  }
+    let reConstructedTime = hours + ":" + minutes + am_pm;
+    return reConstructedTime;
+}
 
 function formatDate(currDate){
     //current format is yyyy/mm/dd
@@ -149,8 +179,9 @@ createCards = (data) => {
         let dateTime = data[i].datetime_local.split("T");
         
         concertName.textContent = data[i].title;
+
         if(filterMap.has(concertName.textContent)){
-            break;
+            continue;
         }else{
             filterMap.set(concertName.textContent, i);
         }
@@ -159,8 +190,8 @@ createCards = (data) => {
 
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
-        concertDate.textContent = formatDate(dateTime[0]);
-        concertTime.textContent = timeConvert(dateTime[1]);
+        concertDate.textContent = dateTime[0];
+        concertTime.textContent = formatTime(dateTime[1]);
         card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
@@ -175,12 +206,9 @@ createCards = (data) => {
 
         card.addEventListener('click', () => {
             removeChildrenByClassName('card-content')
-            eventName = document.createElement('div'),
-            eventName.className = "modal-title";
+            let eventName = document.createElement('div'),
             eventCity = document.createElement('div'),
-            eventCity.className = "modal-city";
             eventVenue = document.createElement('div');
-            eventVenue.className = "modal-venue";
 
             eventName.textContent = "Artist: " + concertName.textContent;
             eventCity.textContent = "City: " + concertCity.textContent;
