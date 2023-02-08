@@ -56,6 +56,66 @@ function searchByCityCoords(city){
 }
 
 
+// search by venue
+function searchByVenue(venue){
+    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
+    fetch(queryVenue)
+    .then(result => { 
+        console.log(result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            fetch()
+            .then(result => {
+                console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.venue
+                console.log(concertArray)
+                createCards(concertArray);
+            });
+        }catch{
+            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
+            ("failed");
+        }  
+    });
+}
+
+
+// search by venue
+function searchByVenue(venue){
+    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
+    fetch(queryVenue)
+    .then(result => { 
+        console.log(result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            fetch()
+            .then(result => {
+                console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.venue
+                console.log(concertArray)
+                createCards(concertArray);
+            });
+        }catch{
+            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
+            ("failed");
+        }  
+    });
+}
+
+
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
     removeChildrenByClassName('card-body');
@@ -88,7 +148,11 @@ createCards = (data) => {
         concertDate.className = "card-date"
         let concertTime = document.createElement("div")
         concertTime.className = "card-time"
+        let concertImg = document.createElement("img")
+        concertImg.setAttribute('src', data[i].performers[0].image)
+        concertImg.classList.add("concert-img")
         let dateTime = data[i].datetime_local.split("T");
+        
         concertName.textContent = data[i].title;
 
         if(filterMap.has(concertName.textContent)){
@@ -96,16 +160,20 @@ createCards = (data) => {
         }else{
             filterMap.set(concertName.textContent, i);
         }
-        
+
+
+
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
         concertTime.textContent = dateTime[1];
+        card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
         card.appendChild(concertVenue);
         card.appendChild(concertDate);
         card.appendChild(concertTime);
+       
 
         card.style.cursor = 'pointer'
         card.classList.add('modal-trigger');
@@ -117,9 +185,9 @@ createCards = (data) => {
             eventCity = document.createElement('div'),
             eventVenue = document.createElement('div');
 
-            eventName.textContent = concertName.textContent;
-            eventCity.textContent = concertCity.textContent;
-            eventVenue.textContent = concertVenue.textContent;
+            eventName.textContent = "Artist: " + concertName.textContent;
+            eventCity.textContent = "City: " + concertCity.textContent;
+            eventVenue.textContent = "Venue: " + concertVenue.textContent;
 
             eventName.classList.add('card-content');
             eventCity.classList.add('card-content');
