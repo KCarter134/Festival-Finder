@@ -115,6 +115,18 @@ function searchByVenue(venue){
     });
 }
 
+// converting time to a normal format (am/pm)
+function tConvert (time) {
+    // Check correct time format and split into components
+    time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)?/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? 'AM' : 'PM';
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join (''); // return adjusted time or original string
+  }
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -166,7 +178,7 @@ createCards = (data) => {
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
-        concertTime.textContent = dateTime[1];
+        concertTime.textContent = tConvert(dateTime[1]);
         card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
