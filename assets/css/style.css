@@ -6,18 +6,19 @@ header {
     height: 40vh;
     text-shadow: 1px 5px 4px rgba(0, 0, 0, 0.6);
     font-weight: 300;
+    width: 100vw;
 }
 
 .web-title {
     position: absolute;
     top: 25px;
     left: 25px;
-    margin: 0 auto;
+    margin: 0;
     z-index: 999;
 }
 
 .city-pic {
-    width: 100%;
+    width: 100vw;
     z-index: 1;
     height: 100%;
 }
@@ -81,10 +82,12 @@ header {
     .card-body {
         font-size: 23px;
     }
+    .web-title {font-size: 6vw;}
   }
 
 @media (max-width: 600px) {
     #card-container { grid-template-columns: repeat(1, 1fr); }
+    .web-title {font-size: 6vw;}
   }
 
   
