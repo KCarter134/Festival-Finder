@@ -99,6 +99,17 @@ function tConvert (time) {
     return time.join (''); // return adjusted time or original string
   }
 
+function formatDate(currDate){
+    //current format is yyyy/mm/dd
+    let destructedDate = currDate.split('-');
+    let yyyy = destructedDate[0];
+    let mm = destructedDate[1];
+    let dd = destructedDate[2];
+    let reconStructedDate = mm + '/' + dd + '/' + yyyy;
+
+    return reconStructedDate;
+}
+
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
     removeChildrenByClassName('card-body');
