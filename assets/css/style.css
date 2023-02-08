@@ -79,14 +79,13 @@ header {
         margin-left: 5%;
         margin-right: 5%;
     }
-    .card-body {
-        font-size: 23px;
-    }
+    .card-body {font-size: 19px;}
     .web-title {font-size: 6vw;}
   }
 
 @media (max-width: 600px) {
     #card-container { grid-template-columns: repeat(1, 1fr); }
+    .card-body {font-size: 15px;}
     .web-title {font-size: 6vw;}
   }
 
