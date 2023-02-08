@@ -2,7 +2,6 @@
 // Client ID: MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU
 // You can add client_id and optionally client_secret to the end of any valid url to authenticate your request.
 
-
 let clientID = "MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU"
 let endPoint = "https://api.seatgeek.com/2"
 let queryString = "https://api.seatgeek.com/2/events?client_id=" + clientID + "&taxonomies.name=concert"
@@ -11,7 +10,6 @@ const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
 //function to remove elements by className
-
 function removeChildrenByClassName(className){
     const toDelete = document.getElementsByClassName(className);
     while(toDelete.length > 0){
@@ -115,18 +113,33 @@ function searchByVenue(venue){
     });
 }
 
-// converting time to a normal format (am/pm)
-function tConvert (time) {
-    // Check correct time format and split into components
-    time = time.toString().match (/^([01]\d|2[0-3])(:)([0-5]\d)?/) || [time];
-  
-    if (time.length > 1) { // If time format correct
-      time = time.slice (1);  // Remove full string match value
-      time[5] = +time[0] < 12 ? 'AM' : 'PM';
-      time[0] = +time[0] % 12 || 12; // Adjust hours
+//format time 
+function formatTime(currTime){
+    let am_pm = '';
+    let deconstructedTime = currTime.split(':');
+    let hours = deconstructedTime[0];
+    let minutes = deconstructedTime[1];
+
+    if(hours > 12){
+        am_pm = 'PM';
+        hours -= 12;
+    }else{
+        am_pm = 'AM';
     }
-    return time.join (''); // return adjusted time or original string
-  }
+    let reConstructedTime = hours + ":" + minutes + am_pm;
+    return reConstructedTime;
+}
+
+function formatDate(currDate){
+    //current format is yyyy/mm/dd
+    let destructedDate = currDate.split('-');
+    let yyyy = destructedDate[0];
+    let mm = destructedDate[1];
+    let dd = destructedDate[2];
+    let reconStructedDate = mm + '/' + dd + '/' + yyyy;
+
+    return reconStructedDate;
+}
 
 // search button to take api data and display into data cards 
 submitBtn.addEventListener("click", () => {
@@ -178,7 +191,7 @@ createCards = (data) => {
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
-        concertTime.textContent = tConvert(dateTime[1]);
+        concertTime.textContent = formatTime(dateTime[1]);
         card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
