@@ -33,9 +33,38 @@ function searchByCityCoords(city){
         return result.json();
     })
     .then(data => {
-        try{
             let something = 'https://api.seatgeek.com/2/events?' + 'lon=' + data[0].lon+ '&' + 'lat=' + data[0].lat +  '&taxonomies.name=concert&client_id=MzEzNjU0MzZ8MTY3Mjk2NjkyNi4xMTAzMDM'
             fetch(something)
+            .then(result => {
+                console.log(result.status);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.events
+                console.log(concertArray)
+                createCards(concertArray);
+            })
+            .catch(error => console.log('search failed')) 
+    })
+    .catch(error => {
+        console.log('search failed')
+    })
+}
+
+
+// search by venue
+function searchByVenue(venue){
+    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
+    fetch(queryVenue)
+    .then(result => { 
+        console.log(result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            fetch()
             .then(result => {
                 console.log(result);
                 return result.json();
@@ -43,7 +72,7 @@ function searchByCityCoords(city){
             .then(data => {
                 console.log(data)
                 let concertArray = [];
-                concertArray = data.events
+                concertArray = data.venue
                 console.log(concertArray)
                 createCards(concertArray);
             });
@@ -150,8 +179,9 @@ createCards = (data) => {
         let dateTime = data[i].datetime_local.split("T");
         
         concertName.textContent = data[i].title;
+
         if(filterMap.has(concertName.textContent)){
-            break;
+            continue;
         }else{
             filterMap.set(concertName.textContent, i);
         }
