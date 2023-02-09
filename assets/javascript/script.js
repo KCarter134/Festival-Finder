@@ -53,37 +53,6 @@ function searchByCityCoords(city){
     })
 }
 
-
-// search by venue
-function searchByVenue(venue){
-    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
-    fetch(queryVenue)
-    .then(result => { 
-        console.log(result.status)
-        return result.json();
-    })
-    .then(data => {
-        try{
-            fetch()
-            .then(result => {
-                console.log(result);
-                return result.json();
-            })
-            .then(data => {
-                console.log(data)
-                let concertArray = [];
-                concertArray = data.venue
-                console.log(concertArray)
-                createCards(concertArray);
-            });
-        }catch{
-            //TODO: Create Modals to inform user of any errors when attempting API call************************************************************************************************************************************
-            ("failed");
-        }  
-    });
-}
-
-
 // search by venue
 function searchByVenue(venue){
     let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
@@ -214,8 +183,8 @@ createCards = (data) => {
             eventPic = document.createElement("img")
             eventPic.className= "modal-img"
 
-            // eventPic.textContent = eventPic.setAttribute('src', data[i].performers[0].image);
-            // ↑ TODO === get correct picture to appear in modal ↑
+            eventPic.setAttribute('src', data[i].performers[0].image) 
+            // ↑ TODO === get correct (ANY PICTURE NOW) picture to appear in modal ↑
             eventName.textContent = concertName.textContent;
             eventCity.textContent = "City: " + concertCity.textContent;
             eventVenue.textContent = "Venue: " + concertVenue.textContent;
