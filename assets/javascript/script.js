@@ -3,7 +3,6 @@
 // Client ID: MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU
 // You can add client_id and optionally client_secret to the end of any valid url to authenticate your request.
 
-
 let clientID = "MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU"
 let endPoint = "https://api.seatgeek.com/2"
 let queryString = "https://api.seatgeek.com/2/events?client_id=" + clientID + "&taxonomies.name=concert"
@@ -12,7 +11,6 @@ const submitBtn = document.getElementById("submit-button");
 const cardContainer = document.getElementById("card-container");
 
 //function to remove elements by className
-
 function removeChildrenByClassName(className){
     const toDelete = document.getElementsByClassName(className);
     while(toDelete.length > 0){
@@ -36,9 +34,38 @@ function searchByCityCoords(city){
         return result.json();
     })
     .then(data => {
-        try{
             let something = 'https://api.seatgeek.com/2/events?' + 'lon=' + data[0].lon+ '&' + 'lat=' + data[0].lat +  '&taxonomies.name=concert&client_id=MzEzNjU0MzZ8MTY3Mjk2NjkyNi4xMTAzMDM'
             fetch(something)
+            .then(result => {
+                console.log(result.status);
+                return result.json();
+            })
+            .then(data => {
+                console.log(data)
+                let concertArray = [];
+                concertArray = data.events
+                console.log(concertArray)
+                createCards(concertArray);
+            })
+            .catch(error => console.log('search failed')) 
+    })
+    .catch(error => {
+        console.log('search failed')
+    })
+}
+
+
+// search by venue
+function searchByVenue(venue){
+    let queryVenue = 'https://api.seatgeek.com/2/venues/' + venue;
+    fetch(queryVenue)
+    .then(result => { 
+        console.log(result.status)
+        return result.json();
+    })
+    .then(data => {
+        try{
+            fetch()
             .then(result => {
                 console.log(result);
                 return result.json();
@@ -46,7 +73,7 @@ function searchByCityCoords(city){
             .then(data => {
                 console.log(data)
                 let concertArray = [];
-                concertArray = data.events
+                concertArray = data.venue
                 console.log(concertArray)
                 createCards(concertArray);
             });
@@ -87,6 +114,7 @@ function searchByVenue(venue){
     });
 }
 
+<<<<<<< HEAD
 // converting time to a normal format (am/pm)
 function timeConvert (time) {
     // Check correct time format and split into components
@@ -96,9 +124,24 @@ function timeConvert (time) {
       time = time.slice (1);  // Remove full string match value
       time[5] = +time[0] < 12 ? 'AM' : 'PM';
       time[0] = +time[0] % 12 || 12; // Adjust hours
+=======
+//format time 
+function formatTime(currTime){
+    let am_pm = '';
+    let deconstructedTime = currTime.split(':');
+    let hours = deconstructedTime[0];
+    let minutes = deconstructedTime[1];
+
+    if(hours > 12){
+        am_pm = 'PM';
+        hours -= 12;
+    }else{
+        am_pm = 'AM';
+>>>>>>> 9a66528b01a49d72f71f3030805a6f8f70955719
     }
-    return time.join (''); // return adjusted time or original string
-  }
+    let reConstructedTime = hours + ":" + minutes + am_pm;
+    return reConstructedTime;
+}
 
 function formatDate(currDate){
     //current format is yyyy/mm/dd
@@ -150,8 +193,9 @@ createCards = (data) => {
         let dateTime = data[i].datetime_local.split("T");
         
         concertName.textContent = data[i].title;
+
         if(filterMap.has(concertName.textContent)){
-            break;
+            continue;
         }else{
             filterMap.set(concertName.textContent, i);
         }
@@ -160,8 +204,13 @@ createCards = (data) => {
 
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
+<<<<<<< HEAD
         concertDate.textContent = formatDate(dateTime[0]);
         concertTime.textContent = timeConvert(dateTime[1]);
+=======
+        concertDate.textContent = dateTime[0];
+        concertTime.textContent = formatTime(dateTime[1]);
+>>>>>>> 9a66528b01a49d72f71f3030805a6f8f70955719
         card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
