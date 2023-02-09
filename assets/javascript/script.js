@@ -121,7 +121,8 @@ submitBtn.addEventListener("click", () => {
     }
     try{
         searchByCityCoords(searchValue.value)
-    }catch{
+    }
+    catch{
         console.log("failed")
     }
     
@@ -181,16 +182,23 @@ createCards = (data) => {
             eventCity.className = "modal-city";
             eventVenue = document.createElement('div');
             eventVenue.className = "modal-venue";
+            eventPic = document.createElement("img")
+            eventPic.className= "modal-img"
 
-            eventName.textContent = "Artist: " + concertName.textContent;
+            eventPic.textContent = eventPic.setAttribute('src', data[i].performers[0].image) 
+            
+            // ↑ TODO === get correct picture to appear in modal ↑
+            eventName.textContent = concertName.textContent;
             eventCity.textContent = "City: " + concertCity.textContent;
             eventVenue.textContent = "Venue: " + concertVenue.textContent;
-
+            
+            eventPic.classList.add('card-content');
             eventName.classList.add('card-content');
             eventCity.classList.add('card-content');
             eventVenue.classList.add('card-content');
-
+            
             let parent = document.getElementById('event-modal');
+            parent.appendChild(eventPic);
             parent.appendChild(eventName);
             parent.appendChild(eventCity);
             parent.appendChild(eventVenue);
