@@ -214,8 +214,7 @@ createCards = (data) => {
             eventPic = document.createElement("img")
             eventPic.className= "modal-img"
 
-            eventPic.textContent = concertImg.textContent;
-            eventPic.setAttribute('src', data[i].performers[0].image); 
+            // eventPic.textContent = eventPic.setAttribute('src', data[i].performers[0].image);
             // ↑ TODO === get correct picture to appear in modal ↑
             eventName.textContent = concertName.textContent;
             eventCity.textContent = "City: " + concertCity.textContent;
