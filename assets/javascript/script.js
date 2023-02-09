@@ -114,7 +114,6 @@ function searchByVenue(venue){
     });
 }
 
-<<<<<<< HEAD
 // converting time to a normal format (am/pm)
 function timeConvert (time) {
     // Check correct time format and split into components
@@ -124,20 +123,6 @@ function timeConvert (time) {
       time = time.slice (1);  // Remove full string match value
       time[5] = +time[0] < 12 ? 'AM' : 'PM';
       time[0] = +time[0] % 12 || 12; // Adjust hours
-=======
-//format time 
-function formatTime(currTime){
-    let am_pm = '';
-    let deconstructedTime = currTime.split(':');
-    let hours = deconstructedTime[0];
-    let minutes = deconstructedTime[1];
-
-    if(hours > 12){
-        am_pm = 'PM';
-        hours -= 12;
-    }else{
-        am_pm = 'AM';
->>>>>>> 9a66528b01a49d72f71f3030805a6f8f70955719
     }
     let reConstructedTime = hours + ":" + minutes + am_pm;
     return reConstructedTime;
@@ -204,13 +189,8 @@ createCards = (data) => {
 
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
-<<<<<<< HEAD
         concertDate.textContent = formatDate(dateTime[0]);
         concertTime.textContent = timeConvert(dateTime[1]);
-=======
-        concertDate.textContent = dateTime[0];
-        concertTime.textContent = formatTime(dateTime[1]);
->>>>>>> 9a66528b01a49d72f71f3030805a6f8f70955719
         card.appendChild(concertImg);
         card.appendChild(concertName);
         card.appendChild(concertCity);
