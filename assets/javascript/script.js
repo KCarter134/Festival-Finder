@@ -188,9 +188,10 @@ createCards = (data) => {
             eventVenue.className = "modal-venue secondary-info"
             eventPic = document.createElement("img")
             eventPic.className= "modal-img"
-            eventPic.textContent = concertImg
             eventDivURL = document.createElement("a")
-            
+
+
+            eventPic.textContent = concertImg
             eventDivURL.textContent = eventURL // puts mapped data into <a> link eventDivURL
             // ↑ TODO === get correct (ANY PICTURE NOW) picture to appear in modal ↑
             eventName.textContent = concertName.textContent;
