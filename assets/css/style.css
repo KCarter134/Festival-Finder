@@ -61,6 +61,9 @@ header {
     font-size: 30px;
     border: 1px solid black;
     border-radius: 5px;
+    -moz-box-shadow: 0 0 10px rgb(0, 0, 0);
+    -webkit-box-shadow: 0 0 10px rgb(0, 0, 0);
+    box-shadow: 0 0 10px rgb(0, 0, 0);
 }
 
 .concert-img {
@@ -73,7 +76,17 @@ header {
                                                     /* Modal Info */
 
 .modal-title {
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.modal-img {
+    width: 80%;
+    height: 300px;
+}
+
+.secondary-info {
+    font-size: 28px;
 }
 
 @media (max-width: 1300px) {
@@ -83,7 +96,7 @@ header {
         margin-right: 5%;
     }
     .card-body {font-size: 19px;}
-    .web-title {font-size: 6vw;}
+    .web-title {font-size: 3vw;}
     #user-input {
         font-size: 25px;
         width: 60vw;
@@ -93,7 +106,6 @@ header {
 @media (max-width: 700px) {
     #card-container { grid-template-columns: repeat(2, 1fr); }
     .card-body {font-size: 15px;}
-    .web-title {font-size: 6vw;}
     #user-input {
         font-size: 20px;
         width: 80vw;
@@ -103,7 +115,6 @@ header {
 @media (max-width: 400px) {
     #card-container { grid-template-columns: repeat(1, 1fr); }
     .card-body {font-size: 15px;}
-    .web-title {font-size: 6vw;}
     #user-input {
         font-size: 20px;
         width: 80vw;

@@ -145,9 +145,12 @@ createCards = (data) => {
         concertTime.className = "card-time"
         let concertImg = document.createElement("img")
         concertImg.setAttribute('src', data[i].performers[0].image)
-        concertImg.classList.add("concert-img")
+        concertImg.className = "concert-img"
         let dateTime = data[i].datetime_local.split("T");
         
+        
+        
+
         concertName.textContent = data[i].title;
 
         if(filterMap.has(concertName.textContent)){
@@ -156,8 +159,7 @@ createCards = (data) => {
             filterMap.set(concertName.textContent, i);
         }
 
-
-
+        eventURL = data[i].url // placing here so the data is mapped and stored in variable
         concertCity.textContent = data[i].venue.display_location;
         concertVenue.textContent = data[i].venue.name;
         concertDate.textContent = dateTime[0];
@@ -175,30 +177,38 @@ createCards = (data) => {
         card.setAttribute('data-target', 'modal1');
 
         card.addEventListener('click', () => {
+            console.log(data)
+            console.log(eventURL)
             removeChildrenByClassName('card-content')
-            let eventName = document.createElement('div'),
+            eventName = document.createElement('div'),
+            eventName.className = "modal-title"
             eventCity = document.createElement('div'),
+            eventCity.className = "modal-city secondary-info"
             eventVenue = document.createElement('div');
-            eventVenue.className = "modal-venue";
+            eventVenue.className = "modal-venue secondary-info"
             eventPic = document.createElement("img")
             eventPic.className= "modal-img"
-
-            eventPic.setAttribute('src', data[i].performers[0].image) 
+            eventPic.textContent = concertImg
+            eventDivURL = document.createElement("a")
+            
+            eventDivURL.textContent = eventURL // puts mapped data into <a> link eventDivURL
             // ↑ TODO === get correct (ANY PICTURE NOW) picture to appear in modal ↑
             eventName.textContent = concertName.textContent;
-            eventCity.textContent = "City: " + concertCity.textContent;
+            eventCity.textContent = "Location: " + concertCity.textContent;
             eventVenue.textContent = "Venue: " + concertVenue.textContent;
             
             eventPic.classList.add('card-content');
             eventName.classList.add('card-content');
             eventCity.classList.add('card-content');
             eventVenue.classList.add('card-content');
+            eventDivURL.classList.add('card-content');
             
             let parent = document.getElementById('event-modal');
             parent.appendChild(eventPic);
             parent.appendChild(eventName);
             parent.appendChild(eventCity);
             parent.appendChild(eventVenue);
+            parent.appendChild(eventDivURL);
         });
         cardContainer.appendChild(card);
     };
