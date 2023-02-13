@@ -4,7 +4,7 @@
 
 
 // National Park Service API KEY: 8w91BhYJTMpXTIMCgectXocGhMCToXrslPKdoQwd
-// Resource Endpoint - https://developer.nps.gov/api/v1/alerts
+// Resource Endpoint - https://developer.nps.gov/api/v1/
 // DOCUMENTATION PAGE: https://www.nps.gov/subjects/developer/api-documentation.htm
 // END POINT DOCUMENTATION PAGE: https://www.nps.gov/subjects/developer/api-documentation.htm#/amenities/parksplaces/getAmenitiesParksplaces
 
