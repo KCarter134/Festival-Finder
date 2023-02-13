@@ -63,20 +63,24 @@ function searchByCityCoords(city){
 
 
 // ↓ NPS API DATA 
-const options = {
-	method: 'GET',
-	headers: {
-		'X-API-Key': '8w91BhYJTMpXTIMCgectXocGhMCToXrslPKdoQwd'
-	}
-};
+function searchNationalPark() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-API-Key': '8w91BhYJTMpXTIMCgectXocGhMCToXrslPKdoQwd'
+        }};
+    fetch('https://developer.nps.gov/api/v1/places?limit=50&start=0"', options)
+        .then(response => response.json())
+        .then(response => {
+            let result = response.data.reduce((arr, info) => arr.concat(info), []).map(obj => obj.title); // get api data title
 
-fetch('https://developer.nps.gov/api/v1/places?limit=50&start=0"', options)
-	.then(response => response.json())
-	.then(response => {
-        console.log(response.data) // 
-        
-    })
-	.catch(err => console.error(err));
+            console.log(result);
+            console.log(response.data) // 
+            
+        })
+        .catch(err => console.error(err));
+}
+searchNationalPark();
 // ↑ NPS API DATA
 
 
