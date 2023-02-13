@@ -2,6 +2,12 @@
 // Client ID: MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU
 // You can add client_id and optionally client_secret to the end of any valid url to authenticate your request.
 
+
+// National Park Service API KEY: 8w91BhYJTMpXTIMCgectXocGhMCToXrslPKdoQwd
+// Resource Endpoint - https://developer.nps.gov/api/v1/alerts
+// DOCUMENTATION PAGE: https://www.nps.gov/subjects/developer/api-documentation.htm
+// END POINT DOCUMENTATION PAGE: https://www.nps.gov/subjects/developer/api-documentation.htm#/amenities/parksplaces/getAmenitiesParksplaces
+
 let clientID = "MzE2ODYzNzZ8MTY3NTAwODYxOS42MTkxODU"
 let endPoint = "https://api.seatgeek.com/2"
 let queryString = "https://api.seatgeek.com/2/events?client_id=" + clientID + "&taxonomies.name=concert"
@@ -42,8 +48,8 @@ function searchByCityCoords(city){
             .then(data => {
                 console.log(data)
                 let concertArray = [];
-                concertArray = data.events
-                console.log(concertArray)
+                concertArray = data.events;
+                console.log(concertArray);
                 createCards(concertArray);
             })
             .catch(error => console.log('search failed')) 
@@ -52,6 +58,29 @@ function searchByCityCoords(city){
         console.log('search failed')
     })
 }
+
+
+
+
+// ↓ NPS API DATA 
+const options = {
+	method: 'GET',
+	headers: {
+		'X-API-Key': '8w91BhYJTMpXTIMCgectXocGhMCToXrslPKdoQwd'
+	}
+};
+
+fetch('https://developer.nps.gov/api/v1/places?limit=50&start=0"', options)
+	.then(response => response.json())
+	.then(response => {
+        console.log(response.data) // 
+        
+    })
+	.catch(err => console.error(err));
+// ↑ NPS API DATA
+
+
+
 
 // search by venue
 function searchByVenue(venue){
